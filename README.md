@@ -34,6 +34,15 @@ $ dotnet --list-sdks
 
 
 
+## Nuggets
+
+- https://learn.microsoft.com/en-us/nuget/consume-packages/install-use-packages-dotnet-cli
+
+```shell
+$ dotnet add package <PACKAGE_NAME> -v <VERSION>
+```
+
+
 ## Refactoring
 
 - [Refactoring source code in Visual Studio Code](https://code.visualstudio.com/docs/editor/refactoring)
@@ -82,3 +91,19 @@ $ dotnet add reference ../hello-world.csproj
 $ dotnet watch test
 ```
 
+
+### Continuous Testing
+
+For a test class or method:
+```csharp
+    [Trait("Category", "Writing")] // Should be removed before commit!
+    public void AcceptWellNammedCharacter() {
+        ...
+        Assert.True(...);
+    }
+```
+
+In the CLI:
+```shell
+$ dotnet watch test --filter Category=Writing
+```
