@@ -59,6 +59,8 @@ $ dotnet watch test --filter Category=Writing
 
 ### 4. Configuring Mock Object Properties
 
+- Code source: [EngineShould.cs](./EngineShould.cs)
+
 Mock property value of a mock object with a constant:
 ```c#
    mockEnemy.Setup(x => x.BossLevel).Returns("BIG");
@@ -90,6 +92,8 @@ Keep the modification of all the properties of the mock (be aware of the place o
 ```
 
 ### 5. Implementng Behavior Verification Tests
+
+- Code source: [EngineShould.cs](./EngineShould.cs)
 
 Verify a mock's method was called:
 ```c#
