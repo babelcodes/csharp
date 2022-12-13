@@ -1,5 +1,14 @@
 # C# - Unit tests & mocks
 
+- [C# - Unit tests \& mocks](#c---unit-tests--mocks)
+  - [Create tests project](#create-tests-project)
+  - [Continuous Testing](#continuous-testing)
+    - [Watch tests](#watch-tests)
+    - [Watch writing tests](#watch-writing-tests)
+  - [Mock](#mock)
+    - [4. Configuring Mock Object Properties](#4-configuring-mock-object-properties)
+    - [5. Implementng Behavior Verification Tests](#5-implementng-behavior-verification-tests)
+
 
 ## Create tests project
 
