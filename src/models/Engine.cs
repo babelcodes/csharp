@@ -11,6 +11,8 @@ namespace MyGame {
     public interface Character {
         bool IsValid(string number);
 
+        int health { get; set; }
+
         // To test mock of property
         string licenseKey {
             get;
@@ -27,6 +29,8 @@ namespace MyGame {
         public string licenseKey => throw new NotImplementedException();
 
         public IServiceInformation serviceInformation => throw new NotImplementedException();
+
+        public int health { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public bool IsValid(string number)
         {
@@ -52,6 +56,7 @@ namespace MyGame {
             if (_character.serviceInformation.license.licenseKey == "VALID") {
                 return true;
             }
+            _character.health = 10;
             return false;
         }
 

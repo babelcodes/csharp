@@ -44,7 +44,6 @@ namespace MyGame.Tests {
         }
 
         // To test mock of property hierarchy
-        [Trait("Category", "Writing")]
         [Fact]
         public void AcceptValidServiceInformationKey() {
             var mockCharacter = new Mock<Character>();
@@ -56,11 +55,26 @@ namespace MyGame.Tests {
             Assert.True(sut.Evaluate("p"));
         }
 
+        // To test the update of the mock (set property on mock)
+        [Trait("Category", "Writing")]
+        [Fact]
+        public void UpdateHealthIfRejected() {
+            var mockCharacter = new Mock<Character>();
+            mockCharacter.DefaultValue = DefaultValue.Mock;
+            mockCharacter.SetupProperty(x => x.health);
+
+            var sut = new Engine(mockCharacter.Object);
+            sut.Evaluate("p");
+
+            Assert.Equal(10, mockCharacter.Object.health);
+        }
+
+        // To test no NullReferenceException on not set property hierarchy (.serviceInformation)
         [Trait("Category", "Writing")]
         [Fact]
         public void RejectIfAllChecksAreFalse() {
             var mockCharacter = new Mock<Character>();
-            mockCharacter.DefaultValue = DefaultValue.Mock; // Prevent NullReferenceException on .serviceInformation
+            mockCharacter.DefaultValue = DefaultValue.Mock;
 
             var sut = new Engine(mockCharacter.Object);
 
