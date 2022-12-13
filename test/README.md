@@ -44,3 +44,38 @@ Then update the CLI command:
 ```shell
 $ dotnet watch test --filter Category=Writing
 ```
+
+
+## Mock
+
+### 4. Configuring Mock Object Properties
+
+Mock property value of a mock object with a constant:
+```c#
+   mockEnemy.Setup(x => x.BossLevel).Returns("BIG");
+```
+
+Mock property value of a mock object with the result of a method:
+```c#
+   mockEnemy.Setup(x => x.BossLevel).Returns(GetBossLevel); // string EngineShould.GetBossLevel();
+```
+
+Mock property value for a hierarchy of properties:
+```c#
+   mockEnemy.Setup(x => x.CastingInformation.Hierarchy.BossLevel).Returns("BIG");
+```
+
+Mock all properties to prevent NullReferenceException:
+```c#
+   mockEnemy.DefaultValue = DefaultValue.Mock;
+```
+
+Keep the modification of a property of the mock (eg the `Health`):
+```c#
+   mockEnemy.SetupProperty(x => x.Health);
+```
+
+Keep the modification of all the properties of the mock (be aware of the place of this line in the code):
+```c#
+   mockEnemy.SetupAllProperties();
+```
