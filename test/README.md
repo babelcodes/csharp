@@ -41,7 +41,7 @@ $ dotnet test
 To run only some tests, for example the ones we are weriting, we can use the `Trait` attribute to define a category.
 
 For a test class or method:
-```csharp
+```cs
     [Trait("Category", "Writing")] // Should be removed before commit!
     public void AcceptWellNammedCharacter() {
         ...
@@ -62,32 +62,33 @@ $ dotnet watch test --filter Category=Writing
 - Code source: [EngineShould.cs](./EngineShould.cs)
 
 Mock property value of a mock object with a constant:
-```c#
+```cs
    mockEnemy.Setup(x => x.BossLevel).Returns("BIG");
 ```
 
 Mock property value of a mock object with the result of a method:
-```c#
-   mockEnemy.Setup(x => x.BossLevel).Returns(GetBossLevel); // string EngineShould.GetBossLevel();
+```cs
+   mockEnemy.Setup(x => x.BossLevel).Returns(GetBossLevel); 
+   // string EngineShould.GetBossLevel();
 ```
 
 Mock property value for a hierarchy of properties:
-```c#
+```cs
    mockEnemy.Setup(x => x.CastingInformation.Hierarchy.BossLevel).Returns("BIG");
 ```
 
 Mock all properties to prevent NullReferenceException:
-```c#
+```cs
    mockEnemy.DefaultValue = DefaultValue.Mock;
 ```
 
 Keep the modification of a property of the mock (eg the `Health`):
-```c#
+```cs
    mockEnemy.SetupProperty(x => x.Health);
 ```
 
 Keep the modification of all the properties of the mock (be aware of the place of this line in the code):
-```c#
+```cs
    mockEnemy.SetupAllProperties();
 ```
 
@@ -96,26 +97,26 @@ Keep the modification of all the properties of the mock (be aware of the place o
 - Code source: [EngineShould.cs](./EngineShould.cs)
 
 Verify a mock's method was called:
-```c#
+```cs
    mockCharacter.Verify(x => x.IsValid("p"));
    mockCharacter.Verify(x => x.IsValid(It.IsAny<string>()));
    mockCharacter.Verify(x => x.IsValid("p"), Times.Exactly(1));
 ```
 
 Verify a mock's property was get:
-```c#
+```cs
    mockCharacter.VerifyGet(x => x.serviceInformation.license.licenseKey);
    mockCharacter.VerifyGet(x => x.serviceInformation.license.licenseKey, Times.Exactly(1));
 ```
 
 Verify a mock's property was set:
-```c#
+```cs
    mockCharacter.VerifySet(x => x.health = 10);
    mockCharacter.VerifySet(x => x.health = It.IsAny<int>());
 ```
 
 Verify all properties calls on a mock:
-```c#
+```cs
    // ...
    mockCharacter.VerifyNoOtherCalls();
 ```
