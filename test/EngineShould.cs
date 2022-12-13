@@ -30,6 +30,12 @@ namespace MyGame.Tests {
             Assert.Throws<Moq.MockException>(() => sut.Evaluate("p"));
         }
 
+        // ##################################################
+        //
+        // Mock Object Properties
+        //
+        // ##################################################
+
         // To test mock of property
         [Trait("Category", "Writing")]
         [Fact]
@@ -55,12 +61,15 @@ namespace MyGame.Tests {
             Assert.True(sut.Evaluate("p"));
         }
 
+        private string GetLicenseKeyValid() {
+            return "VALID";
+        }
+
         // To test the update of the mock (set property on mock)
-        [Trait("Category", "Writing")]
         [Fact]
         public void UpdateHealthIfRejected() {
             var mockCharacter = new Mock<Character>();
-            // mockCharacter.DefaultValue = DefaultValue.Mock;
+            mockCharacter.DefaultValue = DefaultValue.Mock;
             // mockCharacter.SetupProperty(x => x.health);
             mockCharacter.SetupAllProperties();
 
@@ -81,8 +90,78 @@ namespace MyGame.Tests {
             Assert.False(sut.Evaluate("p"));
         }
 
-        private string GetLicenseKeyValid() {
-            return "VALID";
+        // ##################################################
+        //
+        // Behavior Verification Tests
+        //
+        // ##################################################
+
+        // To test a mock's method was called
+        [Fact]
+        [Trait("Category", "Writing")]
+        public void CheckTheCaracterIsValid() {
+            var mockCharacter = new Mock<Character>();
+            mockCharacter.DefaultValue = DefaultValue.Mock;
+
+            var sut = new Engine(mockCharacter.Object);
+            sut.Evaluate("p");
+
+            mockCharacter.Verify(x => x.IsValid("p"));
+            mockCharacter.Verify(x => x.IsValid("p"), "Some message displayed on error");
+            mockCharacter.Verify(x => x.IsValid(It.IsAny<string>()));
+
+            mockCharacter.Verify(x => x.IsValid("p"), Times.Once);
+            mockCharacter.Verify(x => x.IsValid("p"), Times.Exactly(1));
+        }
+
+        // To test a mock's (hierarchy) property was called
+        [Fact]
+        [Trait("Category", "Writing")]
+        public void CheckTheCaracterLicenseKeyIsCompliant() {
+            var mockCharacter = new Mock<Character>();
+            mockCharacter.DefaultValue = DefaultValue.Mock;
+            // mockCharacter.Setup(x => x.IsValid(It.IsAny<string>())).Returns(true);
+
+            var sut = new Engine(mockCharacter.Object);
+            sut.Evaluate("p");
+
+            mockCharacter.VerifyGet(x => x.serviceInformation.license.licenseKey);
+            mockCharacter.VerifyGet(x => x.serviceInformation.license.licenseKey, "Some message displayed on error");
+
+            mockCharacter.VerifyGet(x => x.serviceInformation.license.licenseKey, Times.Once);
+            mockCharacter.VerifyGet(x => x.serviceInformation.license.licenseKey, Times.Exactly(1));
+        }
+
+        // To test a mock's property setter was called
+        [Fact]
+        [Trait("Category", "Writing")]
+        public void CheckTheCaracterHealthWasUpdated() {
+            var mockCharacter = new Mock<Character>();
+            mockCharacter.DefaultValue = DefaultValue.Mock;
+
+            var sut = new Engine(mockCharacter.Object);
+            sut.Evaluate("p");
+
+            mockCharacter.VerifySet(x => x.health = 10);
+            mockCharacter.VerifySet(x => x.health = It.IsAny<int>());
+        }
+
+        // To test all the mock's properties was called
+        [Fact]
+        [Trait("Category", "Writing")]
+        public void CheckAllTheCaracterProperties() {
+            var mockCharacter = new Mock<Character>();
+            mockCharacter.DefaultValue = DefaultValue.Mock;
+
+            var sut = new Engine(mockCharacter.Object);
+            sut.Evaluate("p");
+
+            mockCharacter.VerifySet(x => x.health = 10);
+            mockCharacter.Verify(x => x.IsValid("p"));
+            mockCharacter.Verify(x => x.licenseKey, Times.Once);
+            mockCharacter.Verify(x => x.serviceInformation.license.licenseKey, Times.Once);
+
+            mockCharacter.VerifyNoOtherCalls();
         }
 
     }
