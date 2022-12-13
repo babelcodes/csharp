@@ -3,7 +3,6 @@ using Moq;
 
 namespace MyGame.Tests {
 
-    [Trait("Category", "Writing")]
     public class EngineShould {
 
         [Fact]
@@ -17,16 +16,29 @@ namespace MyGame.Tests {
             mockCharacter.Setup(x => x.IsValid(It.IsRegex("[a-p]"))).Returns(true);
 
             var sut = new Engine(mockCharacter.Object);
+
             Assert.True(sut.Evaluate("p"));
         }
 
         [Fact]
         public void AcceptWellNammedCharacter_withStrictMockingBehaviour() {
             Mock<Character> mockCharacter = new Mock<Character>(MockBehavior.Strict);
+
             var sut = new Engine(mockCharacter.Object);
 
             // Assert.False(sut.Evaluate("p"));
             Assert.Throws<Moq.MockException>(() => sut.Evaluate("p"));
+        }
+
+        [Trait("Category", "Writing")]
+        [Fact]
+        public void AcceptValidLicenseKey() {
+            var mockCharacter = new Mock<Character>();
+            mockCharacter.Setup(x => x.licenseKey).Returns("VALID");
+
+            var sut = new Engine(mockCharacter.Object);
+
+            Assert.True(sut.Evaluate("p"));
         }
 
     }
