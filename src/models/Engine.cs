@@ -1,9 +1,23 @@
 namespace MyGame {
 
+    public interface ILicenseData {
+        string licenseKey { get; }
+    }
+
+    public interface IServiceInformation {
+        ILicenseData license { get; }
+    }
+
     public interface Character {
         bool IsValid(string number);
 
+        // To test mock of property
         string licenseKey {
+            get;
+        }
+
+        // To test mock of property hierarchy
+        IServiceInformation serviceInformation {
             get;
         }
     }
@@ -11,6 +25,8 @@ namespace MyGame {
     public class Enemy : Character
     {
         public string licenseKey => throw new NotImplementedException();
+
+        public IServiceInformation serviceInformation => throw new NotImplementedException();
 
         public bool IsValid(string number)
         {
@@ -31,6 +47,9 @@ namespace MyGame {
                 return true;
             }
             if (_character.licenseKey == "VALID") {
+                return true;
+            }
+            if (_character.serviceInformation.license.licenseKey == "VALID") {
                 return true;
             }
             return false;

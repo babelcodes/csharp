@@ -30,15 +30,45 @@ namespace MyGame.Tests {
             Assert.Throws<Moq.MockException>(() => sut.Evaluate("p"));
         }
 
+        // To test mock of property
         [Trait("Category", "Writing")]
         [Fact]
         public void AcceptValidLicenseKey() {
             var mockCharacter = new Mock<Character>();
-            mockCharacter.Setup(x => x.licenseKey).Returns("VALID");
+            // mockCharacter.Setup(x => x.licenseKey).Returns("VALID");
+            mockCharacter.Setup(x => x.licenseKey).Returns(GetLicenseKeyValid);
 
             var sut = new Engine(mockCharacter.Object);
 
             Assert.True(sut.Evaluate("p"));
+        }
+
+        // To test mock of property hierarchy
+        [Trait("Category", "Writing")]
+        [Fact]
+        public void AcceptValidServiceInformationKey() {
+            var mockCharacter = new Mock<Character>();
+            // mockCharacter.Setup(x => x.licenseKey).Returns("VALID");
+            mockCharacter.Setup(x => x.serviceInformation.license.licenseKey).Returns(GetLicenseKeyValid);
+
+            var sut = new Engine(mockCharacter.Object);
+
+            Assert.True(sut.Evaluate("p"));
+        }
+
+        [Trait("Category", "Writing")]
+        [Fact]
+        public void RejectIfAllChecksAreFalse() {
+            var mockCharacter = new Mock<Character>();
+            mockCharacter.DefaultValue = DefaultValue.Mock; // Prevent NullReferenceException on .serviceInformation
+
+            var sut = new Engine(mockCharacter.Object);
+
+            Assert.False(sut.Evaluate("p"));
+        }
+
+        private string GetLicenseKeyValid() {
+            return "VALID";
         }
 
     }
