@@ -2,6 +2,9 @@
 
 - [C# - Unit tests \& mocks](#c---unit-tests--mocks)
   - [Create tests project](#create-tests-project)
+  - [Testing](#testing)
+    - [Accessible target](#accessible-target)
+    - [Refactoring for testing](#refactoring-for-testing)
   - [Continuous Testing](#continuous-testing)
     - [Watch tests](#watch-tests)
     - [Watch writing tests](#watch-writing-tests)
@@ -23,6 +26,109 @@ $ dotnet test
 ```
 
 **WARNING** to create prod and test projects near, but not nested (test project under prod project).
+
+
+
+
+
+
+
+
+
+
+## Testing
+- https://nuget.org/packages/xunit
+
+```shell
+$ cd MyProject/tests
+$ mkdir GradeBook.Tests
+$ cd GradeBook.Tests
+$ dotnet new xunit
+$ dotnet add package yunit --version 2.4.1
+```
+
+Test case skeleton:
+```csharp
+using System;
+using Xunit;
+
+namespace GradeBook.Tests {
+    public class BookTests {
+        [Fact]
+        public void Test1() {
+
+        }
+    }
+}
+```
+
+Run tests:
+```shell
+$ dotnet test
+```
+
+Test assertions:
+```csharp
+        [Fact] // Attribute
+        public void Test1() {
+            // ARRANGE
+            var x = 5;
+            var y = 5;
+            var expected = 7;
+
+            // ACT
+            var actual = x + y;
+
+            // ASSERT
+            Assert.Equal(expected, actual);
+        }
+```
+
+### Accessible target
+
+```shell
+$ cd MyProject/tests/GradeBook.Tests
+$ dotnet add reference ../../src/GradeBook/GradeBook.csproj
+```
+
+```csharp
+using System.Collections.Generic;
+
+namespace GradeBook {
+    public class Book { // Add public modifier
+        ...
+    }
+}
+```
+
+### Refactoring for testing
+
+```csharp
+        [Fact] // Attribute
+        public void BookCalculatesAnAverageGrade() {
+            // ARRANGE
+            var book = new Book("B");
+            book.AddGrade(89.1);
+            book.AddGrade(90.5);
+            book.AddGrade(77.3);
+
+            // ACT
+            var stats = book.GetStatistics();
+
+            // ASSERT
+            Assert.Equal(85.6, stats.Average, 1);
+            Assert.Equal(85.6, stats.High);
+            Assert.Equal(77.3, stats.Low);
+        }
+```
+
+
+
+
+
+
+
+
 
 
 
