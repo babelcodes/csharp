@@ -2,7 +2,7 @@
 namespace TryConsole {
     class Program {
         static void Main(string[] args) {
-            Console.WriteLine(new Greetings("World").hello());
+            Console.WriteLine(new Greetings("MyWorld").hello());
         }
     }
 }

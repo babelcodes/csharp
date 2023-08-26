@@ -1,152 +1,126 @@
 # C# - Unit tests & mocks
 
-- [C# - Unit tests \& mocks](#c---unit-tests--mocks)
-  - [Create tests project](#create-tests-project)
-  - [Testing](#testing)
-    - [Accessible target](#accessible-target)
-    - [Refactoring for testing](#refactoring-for-testing)
-  - [Continuous Testing](#continuous-testing)
-    - [Watch tests](#watch-tests)
-    - [Watch writing tests](#watch-writing-tests)
-  - [Mock](#mock)
-    - [4. Configuring Mock Object Properties](#4-configuring-mock-object-properties)
-    - [5. Implementng Behavior Verification Tests](#5-implementng-behavior-verification-tests)
+* [Create test project](#create-test-project)
+* [Run tests](#run-tests)
+* [Continuous Testing](#continuous-testing)
+* [My first test case](#my-first-test-case)
+* [Skip with a reason](#skip-with-a-reason)
+* [Grouping with Traits](#grouping-with-traits)
+* [Watch writing tests](#watch-writing-tests)
+* [Data driven with Theory](#data-driven-with-theory)
+* [Setup in the constructor](#setup-in-the-constructor)
+* [Teardown in the destructor](#teardown-in-the-destructor)
+* [Mock](#mock)
+  * [4. Configuring Mock Object Properties](#4-configuring-mock-object-properties)
+  * [5. Implementng Behavior Verification Tests](#5-implementng-behavior-verification-tests)
 
 
-## Create tests project
+## Create test project
 
 - [Organizing and testing projects with the .NET CLI - .NET | Microsoft Learn](https://learn.microsoft.com/en-us/dotnet/core/tutorials/testing-with-cli)
+- https://nuget.org/packages/xunit
 
 ```shell
-$ mkdir test
-$ cd test
+$ cd MyProject/tests
+$ mkdir MyProject.Tests
+$ cd MyProject.Tests
 $ dotnet new xunit
-$ dotnet add reference ../hello-world.csproj
-$ dotnet test
+$ dotnet add reference ../../src/MyProject/my-project.csproj       # Accessible target
+$ dotnet add package xunit --version 2.4.1
 ```
 
 **WARNING** to create prod and test projects near, but not nested (test project under prod project).
 
 
 
-
-
-
-
-
-
-
-## Testing
-- https://nuget.org/packages/xunit
-
-```shell
-$ cd MyProject/tests
-$ mkdir GradeBook.Tests
-$ cd GradeBook.Tests
-$ dotnet new xunit
-$ dotnet add package yunit --version 2.4.1
-```
-
-Test case skeleton:
-```csharp
-using System;
-using Xunit;
-
-namespace GradeBook.Tests {
-    public class BookTests {
-        [Fact]
-        public void Test1() {
-
-        }
-    }
-}
-```
+## Run tests
 
 Run tests:
+
 ```shell
+$ cd MyProject/tests/MyProject.Tests
 $ dotnet test
 ```
-
-Test assertions:
-```csharp
-        [Fact] // Attribute
-        public void Test1() {
-            // ARRANGE
-            var x = 5;
-            var y = 5;
-            var expected = 7;
-
-            // ACT
-            var actual = x + y;
-
-            // ASSERT
-            Assert.Equal(expected, actual);
-        }
-```
-
-### Accessible target
-
-```shell
-$ cd MyProject/tests/GradeBook.Tests
-$ dotnet add reference ../../src/GradeBook/GradeBook.csproj
-```
-
-```csharp
-using System.Collections.Generic;
-
-namespace GradeBook {
-    public class Book { // Add public modifier
-        ...
-    }
-}
-```
-
-### Refactoring for testing
-
-```csharp
-        [Fact] // Attribute
-        public void BookCalculatesAnAverageGrade() {
-            // ARRANGE
-            var book = new Book("B");
-            book.AddGrade(89.1);
-            book.AddGrade(90.5);
-            book.AddGrade(77.3);
-
-            // ACT
-            var stats = book.GetStatistics();
-
-            // ASSERT
-            Assert.Equal(85.6, stats.Average, 1);
-            Assert.Equal(85.6, stats.High);
-            Assert.Equal(77.3, stats.Low);
-        }
-```
-
-
-
-
-
-
-
-
 
 
 
 ## Continuous Testing
 
-### Watch tests
+To automatically run tests each time a file is saved use the `watch` option:
 
-To re-run tests each time a file is saved:
 ```shell
-$ cd test
-$ dotnet test
+$ dotnet watch test
 ```
 
-### Watch writing tests
 
-To run only some tests, for example the ones we are weriting, we can use the `Trait` attribute to define a category.
+
+## My first test case
+
+```c#
+using System;
+using Xunit                            // 1/3 - Xunit import
+
+namespace GameEngine.Tests
+{
+    public class BossEnemyShould       // 2/3 - Class name ends with Should
+    {
+        [Fact]                         // 3/3 - Add the Fact symbol
+        public void HaveCorrectPower()
+        {                                                    // AAA model:
+            PlayerCharacter tested = new PlayerCharacter();  // - Arrange
+            tested.FirstName = "Bruce";                      // - Act
+            Assert.Equal("Bruce", tested.FullName);          // - Assert
+        }
+    }
+}
+```
+
+
+
+## Skip with a reason
+
+With the `Skip` option of the `Fact` symbol:
+
+```c#
+    public class BossEnemyShould
+    {
+        [Fact(Skip = "The dependency is not yet available!")]
+        public void HaveCorrectPower()
+        {}
+    }
+```
+
+
+
+## Grouping with Traits
+
+With the sympbol `[Trait("OneName", "OneValue")]` on a test method:
+
+```c#
+    public class BossEnemyShould
+    {
+        [Fact]
+        [Trait("MyCategory", "Enemy")]
+        [Trait("MyCategory", "Boss")]
+        public void HaveCorrectPower()
+        {}
+    }
+```
+
+Then we can filter on run:
+
+```shell
+$ dotnet test --filter MyCategory=Enemy
+```
+
+
+
+## Watch writing tests
+
+To run only some tests, for example the ones we are writing, we can use the `Trait` attribute to define a category.
 
 For a test class or method:
+
 ```cs
     [Trait("Category", "Writing")] // Should be removed before commit!
     public void AcceptWellNammedCharacter() {
@@ -156,9 +130,79 @@ For a test class or method:
 ```
 
 Then update the CLI command:
+
 ```shell
 $ dotnet watch test --filter Category=Writing
 ```
+
+ 
+
+## Data driven with Theory
+
+```c#
+    public class BossEnemyShould
+    {
+        [Fact]
+        public void HaveMinimumHealth()
+        {
+            _tested.TakeDamage(101);                       // 2/3 - Act
+            Assert.Equal(1, _tested.Health);               // 3/3 - Assert
+        }
+
+        [Theory]                                // 1/2 - Use Theory symbol
+        [InlineData(0, 100)]                    // 2/2 - Combine with InlineData symbol
+        [InlineData(1, 99)]
+        public void TakeDamage(int damage, int expectedHealth)
+        {
+            _tested.TakeDamage(damage);                    // 2/3 - Act
+            Assert.Equal(expectedHealth, _tested.Health);  // 3/3 - Assert
+        }
+    }
+```
+
+
+
+## Setup in the constructor
+
+```c#
+    public class BossEnemyShould
+    {
+        private readonly PlayerCharacter _tested;    // 1/3. Declare properties
+      
+        public BossEnemyShould()                     // 2/3. Define properties in Ctor
+        {
+            _tested = new PlayerCharacter();
+        }
+
+        [Fact]
+        public void HaveCorrectPower()
+        {                                            // 3/3. Remove definitions in testcase
+            // PlayerCharacter tested = new PlayerCharacter();
+            _tested.FirstName = "Bruce";
+            Assert.Equal("Bruce", _tested.FullName)
+        }
+    }
+```
+
+
+
+## Teardown in the destructor
+
+```c#
+    public class BossEnemyShould : IDisposable      // 1/2. Implement interface
+    {
+        public void Dispose()                       // 2/2. Overload method for cleanup
+        {
+            // Cleanup
+        }
+
+        [Fact]
+        public void HaveCorrectPower()
+        {}
+    }
+```
+
+
 
 
 ## Mock
