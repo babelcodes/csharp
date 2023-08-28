@@ -64,7 +64,7 @@ namespace GameEngine.Tests
 {
     public class BossEnemyShould       // 2/3 - Class name ends with Should
     {
-        [Fact]                         // 3/3 - Add the Fact symbol
+        [Fact]                         // 3/3 - Add the Fact attribute
         public void HaveCorrectPower()
         {                                                    // AAA model:
             PlayerCharacter tested = new PlayerCharacter();  // - Arrange
@@ -79,7 +79,7 @@ namespace GameEngine.Tests
 
 ## Skip with a reason
 
-With the `Skip` option of the `Fact` symbol:
+With the `Skip` option of the `Fact` attribute:
 
 ```c#
     public class BossEnemyShould
@@ -149,8 +149,8 @@ $ dotnet watch test --filter Category=Writing
             Assert.Equal(1, _tested.Health);               // 3/3 - Assert
         }
 
-        [Theory]                                // 1/2 - Use Theory symbol
-        [InlineData(0, 100)]                    // 2/2 - Combine with InlineData symbol
+        [Theory]                                // 1/2 - Use Theory attribute
+        [InlineData(0, 100)]                    // 2/2 - Combine with InlineData attribute
         [InlineData(1, 99)]
         public void TakeDamage(int damage, int expectedHealth)
         {
