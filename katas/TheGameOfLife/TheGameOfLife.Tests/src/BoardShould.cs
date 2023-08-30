@@ -5,7 +5,7 @@ namespace TheGameOfLife/*.Tests*/
 {
     public class BoardShould
     {
-        [Trait("Category", "InProgress")]
+        // [Trait("Category", "InProgress")]
         [Fact]
         public void LoadDotSynthaxBoard()
         {
@@ -26,7 +26,8 @@ namespace TheGameOfLife/*.Tests*/
         [InlineData(0, 1, State.Alive)]
         [InlineData(1, 0, State.Alive)]
         [InlineData(1, 1, State.Dead)]
-        public void LoadDotSynthaxBoardTheory(int row, int column, State state)
+        [Fact]
+        public void LoadDotSynthaxBoard(int row, int column, State state)
         {
             // Given
             var board = new Board(".*\n*.");
