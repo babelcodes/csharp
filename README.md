@@ -9,7 +9,7 @@
 
 ## Development
 - [The language C#](./doc/csharp.md)
-- [Unit tests](./test/README.md)
+- [Unit tests](./doc/test.md)
 - [Code and Tests Katas](./katas)
 
 ### IDE
