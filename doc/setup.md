@@ -22,6 +22,7 @@ $ dotnet --list-sdks
 
 ### Visual Studio Code
 
-[Visual Studio Code](https://code.visualstudio.com/)
+[Using .NET in Visual Studio Code](https://code.visualstudio.com/docs/languages/dotnet)
+
 - Install `C# extension`
 - [Setting up Visual Studio Code](

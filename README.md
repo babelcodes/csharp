@@ -11,3 +11,10 @@
 - [Unit tests](./test/README.md)
 - [Refactoring source code in Visual Studio Code](https://code.visualstudio.com/docs/editor/refactoring)
 - [The language C#](./doc/csharp.md)
+
+### IDE
+
+Visual Studio Code
+
+- [20 VS Code Shortcuts For Pro Developers | .cult by Honeypot](https://cult.honeypot.io/reads/20-vs-code-shortcuts-developers/)
+- [Split the editor](https://bobbyhadz.com/blog/vscode-split-editor-vertical-and-switch-between-split-screens)
