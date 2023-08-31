@@ -138,5 +138,24 @@ namespace TheGameOfLife/*.Tests*/
             // Then - Assert
             Assert.Equal(state, board.at(row, column));
         }
+
+        [Theory()]
+        [InlineData(0, 0, State.Alive)]
+        public void BirthCellWithExactly3Neighbors(int row, int column, State state)
+        {
+            // Given - Arrange
+            var board = new Board(
+                ""
+                + ".*.\n"
+                + "**.\n"
+                + "..."
+            );
+
+            // When - Act
+            board.generate();
+
+            // Then - Assert
+            Assert.Equal(state, board.at(row, column));
+        }
     }
 }

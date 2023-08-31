@@ -67,6 +67,11 @@ namespace TheGameOfLife
                             state = State.Dead;
                         }
 
+                    } else if (state == State.Dead) {
+                        if (count == 3) {
+                            state = State.Alive;
+                        }
+
                     }
                     newCells[r][c] = state;
                 }
