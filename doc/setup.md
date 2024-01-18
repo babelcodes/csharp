@@ -14,7 +14,9 @@ On Mac:
 Check:
 
 ```shell
+$ dotnet --version 
 $ dotnet --list-sdks 
+$ dotnet --list-runtimes
 ```
 
 
