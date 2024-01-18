@@ -14,9 +14,9 @@ On Mac:
 Check:
 
 ```shell
-$ dotnet --version 
-$ dotnet --list-sdks 
-$ dotnet --list-runtimes
+$ dotnet --version         ## Give highest version of SDK installed
+$ dotnet --list-sdks       ## Give all SDK installed
+$ dotnet --list-runtimes   ## Give all runtimes installed
 ```
 
 
