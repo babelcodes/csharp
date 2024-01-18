@@ -17,6 +17,7 @@
 
 ## List of Katas
 
+1. [Greeting](https://github.com/babelcodes/csharp/issues/5)
 1. [The Game Of Life](./TheGameOfLife/README.md)
 2. [The Tamagotchi](https://github.com/babelcodes/csharp/issues/4)
 
