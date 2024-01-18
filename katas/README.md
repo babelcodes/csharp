@@ -18,4 +18,5 @@
 ## List of Katas
 
 1. [The Game Of Life](./TheGameOfLife/README.md)
-2. #5
+2. [The Tamagotchi](https://github.com/babelcodes/csharp/issues/4)
+
