@@ -8,7 +8,7 @@
 - [GitHub - garora/TDD-Katas: This repository contains Hands on Test Driven Development Katas (C#)](https://github.com/garora/TDD-Katas)
 	- These Katas can also be used for practicising your C# skills for Unit testing
 	- [TDD-Katas/KatasReadme.md at main · garora/TDD-Katas · GitHub](https://github.com/garora/TDD-Katas/blob/main/KatasReadme.md)
-- https://github.com/asierba/Katas.CSharp
+- [GitHub - asierba/Katas.CSharp: Collection of different Katas in C# developed following a TDD approach](https://github.com/asierba/Katas.CSharp)
 - [The Coding Dojo Handbook (pragprog.com)](https://media.pragprog.com/titles/ebdojo/kata-catalogue.pdf)
 - [TDD Buddy](https://tddbuddy.com/katas.html)
 - [All Katas (kata-log.rocks)](https://kata-log.rocks/)
