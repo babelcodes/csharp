@@ -18,6 +18,4 @@
 ## List of Katas
 
 1. [The Game Of Life](./TheGameOfLife/README.md)
-2. Tamagotchi
-   1. https://agilekatas.co.uk/katas/Tamagotchi-Kata
-   2. https://github.com/selcouthlyBlue/agile_katas?tab=readme-ov-file
+2. #5
